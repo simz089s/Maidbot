@@ -290,6 +290,8 @@ client.on('message', async message => {
   }
 });
 
-client.login(token)
+// Really sorry for doing this for now
+client.login(fs.readFileSync('./.env', 'utf8').slice("DISCORD_BOT_SECRET=".length).trim())
+// client.login(token)
   .then(() => console.log("All good!"))
   .catch(console.error);
