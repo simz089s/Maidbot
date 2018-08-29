@@ -16,7 +16,7 @@ let active = true;
 let waiting = false;
 let master = '';
 let greetedUsers = new Array();
-let votes = {};
+let votes = data.votes;
 
 function wait(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
 
