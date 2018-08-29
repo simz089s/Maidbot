@@ -51,6 +51,15 @@ client.on('message', async message => {
   if (message.author.bot) { return; }
   if (message.author.id == client.user.id) { return; }
 
+  if (message.content === `${name} KILL -9`) {// && message.author.id === '') {
+    client.destroy();
+  } else if (message.content === `${name} REBOOT`) {// && message.author.id === '') {
+    client.destroy();
+    client.login(token)
+      .then(() => { console.log("Reboot successful."); })
+      .catch(console.error);
+  }
+
   // Standard first time greet
   if (!greetedUsers.includes(message.author.tag)) {
     greetedUsers.push(message.author.tag);
@@ -155,6 +164,20 @@ client.on('message', async message => {
     else if (cmd === 'VOTE RESET') {
       votes = {};
       message.channel.send('@here , votes were reset.');
+    }
+    else if (cmd.startsWith('VOTE RESET UPDATE ')) {// && message.author.id == ) {
+      try {
+        votes = JSON.parse(cmdNC.slice('VOTE RESET UPDATE '.length));
+        message.reply('votes were updated.');
+        data.votes = votes;
+        fs.writeFile(dataJSON, JSON.stringify(data), "utf8", err => {
+          if (err) { return console.log(err); }
+          else { console.log("Votes saved."); }
+        });
+      } catch (err) {
+        message.reply('error updating votes.');
+        console.error();
+      }
     }
     else {
       if (args[1] === 'FOR') { args.shift(); }
