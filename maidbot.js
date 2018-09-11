@@ -186,7 +186,7 @@ client.on('message', async message => {
       let entrant = args.join(" ");
       if (!votes[entrant]) { votes[entrant] = new Array("@"+message.author.tag); }
       else { votes[entrant].push("@"+message.author.tag); }
-      message.reply('はい。 :heavy_plus_sign: :one: for "' + entrant + '".');
+      message.reply('understood, :heavy_plus_sign: :one: for "' + entrant + '".');
     }
   }
   else if (args[0].startsWith('HELLO') || args[0].startsWith('HI')
@@ -303,7 +303,7 @@ client.on('message', async message => {
         }
       }
       else {
-        message.channel.send("Only first to ninth video ください。");
+        message.channel.send("Only first to ninth video, please.");
       }
     }
     else {
