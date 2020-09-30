@@ -96,7 +96,7 @@ function rand(min: number, max: number): number { return Math.floor(Math.random(
 
 function startsWithAny(s: string, a: Array<any>): boolean { return a.some((e) => s.startsWith(e)); }
 
-function wait(ms: number): Promise<NodeJS.Timeout> { return new Promise(resolve => setTimeout(resolve, ms)); }
+function wait(ms: number): Promise<number> { return new Promise(resolve => setTimeout(resolve, ms)); }
 
 async function rickRoll(channel) {
   try {
