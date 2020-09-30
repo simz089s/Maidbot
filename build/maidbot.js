@@ -16,6 +16,13 @@ const discord_js_1 = __importDefault(require("discord.js"));
 const salutations_js_1 = __importDefault(require("./salutations.js"));
 /**
  * Essential stuff
+ * Discord bot token should be in the project's root folder `.env` file
+ * ./src/config.json should contain `prefix[es]` and `name` e.g.
+ * {
+ *   "prefix": "!MAIDBOT ",
+ *   "prefixes": ["!MAIDBOT "],
+ *   "name": "MAIDBOT"
+ * }
  */
 const TOKEN_LENGTH = 19;
 const TOKEN = fs_1.default.readFileSync('./.env', 'utf8').slice(TOKEN_LENGTH).trim();
@@ -27,8 +34,9 @@ const CLIENT = new discord_js_1.default.Client();
  * Other stuff
  */
 let isLogging = false;
-const MAIN_CHANNEL_ID = '';
-const BOSS_ID = '';
+const MAIN_CHANNEL_ID = ''; // E.g. #general , wherever members join the server
+const BOSS_ID = ''; // Bot maker or whoever has access to important functions
+// Pausing bot
 let active = true;
 let shooer = '';
 const MAX_GREETS = 8;
@@ -123,7 +131,7 @@ CLIENT.on('guildMemberAdd', member => {
         console.log('\tand it is a bot!');
     }
     const channel = member.guild.channels.cache.get(MAIN_CHANNEL_ID);
-    // Welcome new member, rotate greeting and headpat them
+    // Welcome new member, rotate greeting and react to their join
     if (channel && isTextCh(channel)) {
         channel.messages.fetch({ limit: 1 }).then(messages => {
             channel.send(salutations_js_1.default.welcome(msgRot, member));
