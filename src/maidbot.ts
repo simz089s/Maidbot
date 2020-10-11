@@ -76,7 +76,9 @@ function reset() {
 }
 
 function test(msg) {
-  if (msg.author.id != BOSS_ID) { return; }
+  const member = msg.author;
+  if (member.id != BOSS_ID) { return; }
+  if (member.bot) { return; }
 }
 
 function logError(...args) {
@@ -152,7 +154,7 @@ CLIENT.on("guildDelete", guild => {
 
 
 CLIENT.on('guildMemberAdd', member => {
-  console.log(`>>> ${member.nickname} AKA ${member.displayName} AKA ${member.user!.username} has joined the server!`);
+  console.log(`>>> ${member.displayName} has joined the server!`);
   if (member.user && member.user.bot) { console.log('\tand it is a bot!'); }
   else if (((arg: any): arg is User => arg)(member) && member.bot) { console.log('\tand it is a bot!'); }
 
@@ -178,7 +180,7 @@ CLIENT.on('guildMemberAdd', member => {
 
 
 CLIENT.on('message', async message => {
-  // test(message);
+  test(message);
 
   // if (!isTextCh(message.channel)) { return; }
   const msgCh: TextChannel = message.channel as TextChannel;
@@ -275,8 +277,6 @@ CLIENT.on('message', async message => {
   }
 
   if (message.author.bot) { return; }
-
-  test(message);
 
   // if (message.channel.name !== 'bot-test') { return; }
   // if (!message.author.id === BOSS_ID) {
