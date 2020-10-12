@@ -56,8 +56,10 @@ let msgRot: number = rand(0, MAX_GREETS);
 let oldMsgRot: number = msgRot;
 
 const votesFilename: string = './src/votes.json';
-let votesJSON = JSON.parse(fs.readFileSync(votesFilename, 'utf8'));
-let votes: Object = votesJSON.votes;
+let votesJSON = {"votes":{}};
+if (fs.existsSync(votesFilename)) { votesJSON = JSON.parse(fs.readFileSync(votesFilename, 'utf8')); }
+else { fs.writeFileSync(votesFilename, JSON.stringify(votesJSON), 'utf8'); }
+let votes = votesJSON.votes;
 
 
 /**
