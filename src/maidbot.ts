@@ -78,9 +78,10 @@ function reset() {
 }
 
 function test(msg) {
-  const member = msg.author;
-  if (member.id != BOSS_ID) { return; }
-  if (member.bot) { return; }
+  // const user = msg.author;
+  // const member = msg.member;
+  // if (user.id != MASTER_ID) { return; }
+  // if (user.bot) { return; }
 }
 
 function logError(...args) {
@@ -184,16 +185,20 @@ CLIENT.on('guildMemberAdd', member => {
 CLIENT.on('message', async message => {
   test(message);
 
+  if (!message.guild?.me?.permissions || !message.guild?.me?.hasPermission("SEND_MESSAGES")) { return; };
   // if (!isTextCh(message.channel)) { return; }
   const msgCh: TextChannel = message.channel as TextChannel;
-  const msgUserId: string = message.author.id;
+  const msgMember: Discord.GuildMember | null = message.member;
+  const msgMemberId: string | undefined = msgMember?.id;
+  const msgUser: Discord.User = message.author;
+  const msgUserId: string = msgUser.id;
 
   let msg = message.content.trim().toUpperCase();
 
   // Logs
   if (isLogging) {
     const source = isDMCh(message.channel) ? "" : message.channel.name;
-    console.log(`${message.createdAt.toLocaleTimeString('en-US')}[${source}:${message.author.username}] ${message.content}`);
+    console.log(`${message.createdAt.toLocaleTimeString('en-US')}[${source}:${msgMember?.displayName || message.author.username}] ${message.content}`);
   }
 
   // Special "important" commands reserved for bot maker
