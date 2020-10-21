@@ -61,10 +61,20 @@ Caused by: java.MaidBot.NotAnException: Syntax Error
         ... 2 more
 *Rebooting... Please wait*
 Apologies, ${member}, welcome to the club!`;
+        case 8:
+            return `Welcome, ${member}. Here is an important survey in order to determine the quality of your membership:
+    1. Are cereals a salad or a soup?
+    2. What are your opinions on pies?
+    3. Tomatoes or tomatoes?
+    4. ...and are they fruits or vegetables?
+    5. Why are we here? Just to suffer?
+Thank you for your patience.`;
         default:
             return `Welcome back, ${member}!`;
     }
 }
+
+exports.MAX_GREETS = 9;
 
 exports.usersToGreet = ['',
                         '',

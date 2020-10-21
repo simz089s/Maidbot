@@ -49,7 +49,7 @@ const BOSS_ID: string = ''; // Bot maker or whoever has access to important func
 let active: boolean = true;
 let shooer: string = '';
 
-const MAX_GREETS: number = 8;
+const MAX_GREETS: number = salutations.MAX_GREETS;
 let usersToGreet: string[] = [...salutations.usersToGreet];
 let specialGreets: boolean = true;
 let msgRot: number = rand(0, MAX_GREETS);
