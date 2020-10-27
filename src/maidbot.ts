@@ -185,8 +185,12 @@ CLIENT.on('guildMemberAdd', member => {
 CLIENT.on('message', async message => {
   test(message);
 
-  if (!message.guild?.me?.permissions || !message.guild?.me?.hasPermission("SEND_MESSAGES")) { return; };
-  // if (!isTextCh(message.channel)) { return; }
+  if ((!message.guild?.me?.permissions && !message.guild?.me?.hasPermission("SEND_MESSAGES"))
+      || !isTextCh(message.channel)) {
+    logError('Bot does not have permission to send messages to this channel.');
+    return;
+  }
+  
   const msgCh: TextChannel = message.channel as TextChannel;
   const msgMember: Discord.GuildMember | null = message.member;
   const msgMemberId: string | undefined = msgMember?.id;
