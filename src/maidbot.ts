@@ -186,7 +186,8 @@ CLIENT.on('message', async message => {
   test(message);
 
   if ((!message.guild?.me?.permissions && !message.guild?.me?.hasPermission("SEND_MESSAGES"))
-      || !isTextCh(message.channel)) {
+      || !isTextCh(message.channel)
+      || (!isDMCh(message.channel) && !message.channel.permissionsFor(message.guild?.me!)?.has(Discord.Permissions.FLAGS["SEND_MESSAGES"]))) {
     logError('Bot does not have permission to send messages to this channel.');
     return;
   }
