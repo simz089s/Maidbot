@@ -1,2 +1,2 @@
 # Maidbot
-My first attempt at a Discord bot
+MSAC Discord bot (re-)written in Rust

@@ -1,0 +1,20 @@
+[package]
+authors = ["Simon Zheng <simon.zheng@mail.mcgill.com>"]
+description = "MSAC Discord bot"
+homepage = "https://github.com/simz089s/Maidbot"
+license = "ISC"
+name = "maidbot"
+readme = "README.md"
+repository = "https://github.com/simz089s/Maidbot.git"
+version = "0.0.1"
+edition = "2018"
+
+[dependencies]
+chrono = "^0"
+dotenv = "^0"
+serenity = "^0"
+#tokio = "^1"
+
+[dependencies.tokio]
+features = ["full"]
+version = "^1"
