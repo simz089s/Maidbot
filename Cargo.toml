@@ -22,8 +22,8 @@ features = [
     # "cache",
     # "http",
     # "utils",
-    # "framework",
-    # "standard_framework",
+    "framework",
+    "standard_framework",
 ]
 
 [dependencies.tokio]
