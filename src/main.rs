@@ -1,55 +1,46 @@
-// use chrono;
+use std::collections::HashSet;
+use dotenvy;
+use serenity::prelude::*;
+use serenity::http::Http;
 
-use serenity::async_trait;
-use serenity::client::{Client, Context, EventHandler};
-use serenity::model::channel::Message;
-use serenity::framework::standard::{
-    StandardFramework,
-    CommandResult,
-    macros::{
-        command,
-        group
-    }
-};
+mod models;
 
-use std::env;
-use dotenv::dotenv;
+use crate::models::handler::Handler;
 
-#[group]
-#[commands(ping)]
-struct General;
+mod handlers;
 
-struct Handler;
-
-#[async_trait]
-impl EventHandler for Handler {}
+mod commands;
 
 #[tokio::main]
 async fn main() {
-    let framework = StandardFramework::new()
-        .configure(|c| c.prefix("~")) // set the bot's prefix to "~"
-        .group(&GENERAL_GROUP);
-
     // Login with a bot token from the environment
-    dotenv().ok();
-    let token = env::var("DISCORD_TOKEN").expect("token");
-    let mut client = Client::builder(token)
+    let mut token = String::new();
+    for item in dotenvy::dotenv_iter().expect("token") {
+        let (k, v) = item.expect("token");
+        if k == "DISCORD_TOKEN" {
+            token = v;
+        }
+    }
+    let http = Http::new(&token);
+    let (_owners, _bot_id) = match http.get_current_application_info().await {
+        Ok(info) => {
+            let mut owners = HashSet::new();
+            owners.insert(info.owner.id);
+
+            (owners, info.id)
+        },
+        Err(why) => panic!("Could not access application info: {:?}", why),
+    };
+    let intents = GatewayIntents::non_privileged()
+                                | GatewayIntents::MESSAGE_CONTENT
+                                ;
+    let mut client = Client::builder(token, intents)
         .event_handler(Handler)
-        .framework(framework)
         .await
         .expect("Error creating client");
 
-    // start listening for events by starting a single shard
+    // Start listening for events by starting a single shard
     if let Err(why) = client.start().await {
-        println!("An error occurred while running the client: {:?}", why);
+        println!("Client error: {:?}", why)
     }
-}
-
-#[command]
-async fn ping(ctx: &Context, msg: &Message) -> CommandResult {
-    let mut message: Message = msg.reply(ctx, "Pong!").await?;
-    let new_content = format!("Pong! Latency is {}ms."/* API Latency is {}ms."*/, (message.timestamp - msg.timestamp).num_milliseconds()/*, ctx.shard.latency().round()*/);
-    message.edit(ctx, |m| m.content(new_content)).await?;
-
-    Ok(())
 }
