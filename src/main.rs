@@ -12,6 +12,7 @@ use serenity::prelude::{
 mod commands;
 mod handlers;
 mod models;
+mod utils;
 
 use crate::commands::moe_moe_kyun::*;
 use crate::models::handler::Handler;
