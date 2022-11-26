@@ -1,15 +1,18 @@
 use std::collections::HashSet;
+
 use dotenvy;
-use serenity::prelude::*;
 use serenity::http::Http;
+use serenity::prelude::{
+    Client,
+    GatewayIntents,
+};
 
 mod models;
+mod handlers;
+mod commands;
 
 use crate::models::handler::Handler;
 
-mod handlers;
-
-mod commands;
 
 #[tokio::main]
 async fn main() {

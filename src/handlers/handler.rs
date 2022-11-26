@@ -1,13 +1,15 @@
-use serenity::prelude::{ Context, EventHandler };
 use serenity::async_trait;
 use serenity::model::application::command::Command;
 use serenity::model::application::interaction::Interaction;
 use serenity::model::event::ResumedEvent;
 use serenity::model::gateway::Ready;
-
-use crate::models::handler::Handler;
+use serenity::prelude::{
+    Context,
+    EventHandler,
+};
 
 use crate::commands::*;
+use crate::models::handler::Handler;
 
 #[async_trait]
 impl EventHandler for Handler {

@@ -1,4 +1,7 @@
-use serenity::model::application::interaction::{ Interaction, InteractionResponseType };
+use serenity::model::application::interaction::{
+    Interaction,
+    InteractionResponseType,
+};
 use serenity::prelude::Context;
 
 use crate::models::handler::Handler;
