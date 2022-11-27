@@ -6,5 +6,5 @@ pub fn run(_options: &[CommandDataOption]) -> String {
 }
 
 pub fn register(command: &mut CreateApplicationCommand) -> &mut CreateApplicationCommand {
-    command.name("ping").description("Ping Cannon locked and loaded.")
+    command.name("ping").description("Ping cannon locked and loaded.")
 }
